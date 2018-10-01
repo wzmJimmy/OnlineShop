@@ -40,7 +40,7 @@
             
             <c:if test="${!empty pageContext.request.userPrincipal.name}">
             	<ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="<c:url value="/index" />">
+                    <li class="nav-item"><a class="nav-link" href="<c:url value="/" />">
                     	<span><i class="fas fa-user"></i></span>
                     	Welcome ${pageContext.request.userPrincipal.name}</a></li>
 

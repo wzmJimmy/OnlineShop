@@ -3,6 +3,7 @@
 	width: 1105px; 
 	background-color: rgba(241,241,241);
 	font-size: 14px;
+	min-height:700px;
 }
 .container thead{
 	white-space: nowrap;
