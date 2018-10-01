@@ -1,0 +1,19 @@
+/* Slider */
+#myCarousel img{
+	line-height: 1;
+	height: 350px;
+	width: 100%;
+}
+#myCarousel .carousel-item.active{
+	width: 100%;
+}
+.container{
+    min-width: 600px;
+    max-width: 1000px;
+}
+.jumbotron{
+	background-color: #f0f0f0);
+	margin-bottom:0px;
+	padding-top:0px;
+	padding-bottom:2px;
+}

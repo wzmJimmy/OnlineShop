@@ -1,0 +1,16 @@
+body{
+	font-family: "Raleway", sans-serif
+}
+.w3-sidenav a, .w3-sidenav h4 {
+	font-weight: bold
+}
+#main-grid{
+	background-color: #ffffff;
+}
+.w3-row-padding{
+	padding: 0px 30px; 
+	margin-bottom: 20px;
+}
+#main-grid img{
+	width: 100%;
+}

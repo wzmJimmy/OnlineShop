@@ -1,0 +1,40 @@
+#login-container{
+	line-height: 0.75;
+	font-size: 19px;
+	display:flex;
+	height: 550px;
+	background-color: #ffffff;
+	align-items: center;
+}
+@media (min-height: 800px){
+	#login-container{
+	height: 700px;
+	}	
+}
+@media (max-height: 600px){
+	#login-container{
+	height: 450px;
+	}	
+}
+#login-panel{
+	margin: auto;
+	padding: 0px;
+}
+.card-body{
+	width: 80%;
+	margin: auto;
+}
+#button{
+	display: flex;
+	align-items: center;
+}
+#button>div{
+	flex:1;
+	text-align: left;
+}
+#button>p{
+	flex:2;
+	margin-bottom:0px;
+	text-align: right;
+	font-size: 0.8em;
+}

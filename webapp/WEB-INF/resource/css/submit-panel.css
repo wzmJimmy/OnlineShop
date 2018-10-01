@@ -1,0 +1,44 @@
+.sub-title{
+	font-size: 20px;
+	text-align: center;
+}
+.sub-panel{
+	padding: 20px 0px;
+	border-bottom: 1px solid #e0e0e0;
+}
+.card-body .sub-panel.last{
+	border-bottom:none;
+}
+.container{
+	padding: 0px;	
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.background{
+	min-height: 700px;
+	padding: 20px 0px;
+}
+.form-actions{
+	text-align: center;
+}
+.buttons>button{
+	width: 110px;
+}
+/* .bill{
+	background-color:#f0f0f0;
+} */
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  	}
+  .bill{
+	max-width: 550px;
+	}
+}
+#cost{
+	font-style:oblique;
+	font-weight:700;
+	margin-left:15px;
+	text-decoration:underline;
+}

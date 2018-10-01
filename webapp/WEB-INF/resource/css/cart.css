@@ -1,0 +1,24 @@
+.container{
+	min-width: 600px;
+	max-width:900px;
+	margin: 20px auto; 
+	min-height:700px;
+}
+.container>div{
+	margin-right: 20px;
+	margin-left: 20px;
+}
+.sub-title{
+	padding-top:20px;
+	font-size:20px;
+	font-weight:700;
+}
+.buttons{ 
+	margin-bottom: 30px; 
+}
+#cost{
+	font-style:oblique;
+	font-weight:700;
+	margin-left:15px;
+	text-decoration:underline;
+}

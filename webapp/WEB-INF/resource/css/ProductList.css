@@ -1,7 +1,12 @@
 @CHARSET "ISO-8859-1";
-#productList{
+.container{
+	width: 1105px; 
 	background-color: rgba(241,241,241);
+	font-size: 14px;
 }
-#productable{
-	
+.container thead{
+	white-space: nowrap;
+}
+.container td{
+	align-items: center;
 }
