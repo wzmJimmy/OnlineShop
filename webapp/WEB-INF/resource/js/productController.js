@@ -1,8 +1,24 @@
+var li =[];
+var stocks = $(".stock");
+var len = stocks.length;
+var chart = $(".addToChart");
+var bool = !!chart.length;
+for(var i=0;i<len;i++){li.push(stocks[i].innerHTML.trim())}
+var style = ["color:#FF7F50","color:#00008B","color:#F00"];
+for( i in li){
+	var flag = 0; 
+	if(li[i]=="Sufficient") flag=1;
+	if(li[i]=="Shortage") flag=2;
+	
+	stocks[i].style=style[flag];
+	if(bool&&flag==2){chart[i].style="display:none";}
+}
+
 var app = angular.module("myapp", []).controller(
 		"myController",
 		function($scope, $http) {
 
-			var BASE_PATH = "http://localhost:8080/onlineShop";
+			var BASE_PATH = "http://18.218.24.105/onlineShop"; //"http://18.218.24.105/onlineShop" "http://localhost:8080/onlineShop"
 
 			$scope.getProductList = function() {
 				$http.get(BASE_PATH + "/getProductsList")
@@ -12,9 +28,12 @@ var app = angular.module("myapp", []).controller(
 			}
 
 			$scope.addToCart = function(productId) {
+				
 				$http.put(BASE_PATH + "/cart/add/" + productId)
-						.success(function() {
+						.then(function() {
 							alert("Added Successfully");
+						},function() {
+							alert("Cannot Add any more");
 						})
 			}
 
@@ -39,8 +58,8 @@ var app = angular.module("myapp", []).controller(
 			}
 
 			$scope.clearCart = function() {
-				$http.put(BASE_PATH + "/cart/removeAllItems/"
-								+ $scope.cartId).success(function() {
+				$http.put(BASE_PATH + "/cart/removeAllItems/")
+					.success(function() {
 					$scope.refreshCart();
 				});
 			}
@@ -53,3 +72,5 @@ var app = angular.module("myapp", []).controller(
 
 			}
 		});
+
+

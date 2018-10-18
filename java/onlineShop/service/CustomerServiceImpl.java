@@ -19,5 +19,8 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer getCustomerByUserName(String userName) {
    	 return customerDao.getCustomerByUserName(userName);
     }
+    public boolean deletebyId(int i) {
+    	return customerDao.deletebyId(i);
+    }
 }
 

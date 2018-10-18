@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,6 +31,17 @@ public class CartItem implements Serializable {
 	@ManyToOne
 	@JsonIgnore
 	private Cart cart;
+	
+	@Transient
+	private int invalidnumber;
+
+	public int getInvalidnumber() {
+		return invalidnumber;
+	}
+
+	public void setInvalidnumber(int invalidnumber) {
+		this.invalidnumber = invalidnumber;
+	}
 
 	public int getId() {
 		return id;

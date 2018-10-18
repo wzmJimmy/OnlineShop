@@ -36,7 +36,7 @@ public class Product implements Serializable {
 	@Column(name = "price")
 	private double productPrice;
 	@Column(name = "unit")
-	private String unitStock;
+	private int unitStock;
 	
 	@Transient
 	private MultipartFile productImage;
@@ -89,11 +89,11 @@ public class Product implements Serializable {
 		this.productPrice = productPrice;
 	}
 
-	public String getUnitStock() {
+	public int getUnitStock() {
 		return unitStock;
 	}
 
-	public void setUnitStock(String unitStock) {
+	public void setUnitStock(int unitStock) {
 		this.unitStock = unitStock;
 	}
 

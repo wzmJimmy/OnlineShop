@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,8 +24,14 @@ public class Customer implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@NotNull(message="firstName cannot be null")
 	private String firstName;
+	
+	@NotNull(message="lastName cannot be null")
 	private String lastName;
+	
+	@NotNull(message="Phone cannot be null")
 	private String customerPhone;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

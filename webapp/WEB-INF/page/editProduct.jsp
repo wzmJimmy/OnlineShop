@@ -21,7 +21,7 @@
 		<div class="card-header"><h1>Update Product</h1></div>
 		<div class="card-body">
 			<c:url value="/admin/product/editProduct/${productId}" var="url"></c:url>
-			<form:form method="post" action="${url}" modelAttribute="editProductObj">
+			<form:form method="post" action="${url}" modelAttribute="editProductObj" enctype="multipart/form-data">
 				<%@ include file="basic/product.jsp"%>
 			</form:form>
 		</div>

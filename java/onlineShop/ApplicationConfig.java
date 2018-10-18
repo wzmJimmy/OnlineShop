@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.web.multipart.MultipartResolver;
@@ -55,7 +56,7 @@ public class ApplicationConfig {
 
 	private final Properties hibernateProperties() {
 		Properties hibernateProperties = new Properties();
-		hibernateProperties.setProperty("hibernate.hbm2ddl.auto","update" );//"create-drop"
+		hibernateProperties.setProperty("hibernate.hbm2ddl.auto","update" );//"create-drop" "update"
 		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL57Dialect");
 		hibernateProperties.setProperty("hibernate.show_sql", "true");
 		return hibernateProperties;

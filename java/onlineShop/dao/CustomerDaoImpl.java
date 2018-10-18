@@ -2,7 +2,7 @@ package onlineShop.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -28,38 +28,40 @@ public class CustomerDaoImpl implements CustomerDao {
    	 customer.setCart(cart);
    	 cart.setCustomer(customer);
 
-   	 Session session = null;
-   	 try {
-   		 session = sessionFactory.openSession();
+   	 try(Session session = sessionFactory.openSession();) {
    		 session.beginTransaction();
    		 session.save(authorities);
    		 session.save(customer);
    		 session.getTransaction().commit();
    	 } catch (Exception e) {
    		 e.printStackTrace();
-   	 } finally {
-   		 if(session != null) {
-   			 session.close();
-   		 }
    	 }
     }
 
     public Customer getCustomerByUserName(String userName) {
-   	 Session session = null;
    	 User user = null;
-   	 try {
-   		 session = sessionFactory.openSession();
+   	 try(Session session = sessionFactory.openSession();) {
    		 session.beginTransaction();
-   		 user = (User)session.createCriteria(User.class).add(Restrictions.eq("emailId", userName)).uniqueResult();
+   		 Query query = session.createQuery("from User u where u.emailId=?");
+   		 user = (User)query.setParameter(0, userName).uniqueResult();
    		 session.getTransaction().commit();
    	 } catch (Exception e) {
    		 e.printStackTrace();
-   	 } finally {
-   		 if(session != null) {
-   			 session.close();
-   		 }
    	 }
+   	 
    	 if(user != null) return user.getCustomer();
    	 return null;
     }
+    
+	public boolean deletebyId(int i) {
+      	 try(Session session = sessionFactory.openSession();) {
+      		 session.beginTransaction();
+      		 Customer cust = (Customer)session.load(Customer.class,new Integer(i));
+      		 session.delete(cust);
+      		 session.getTransaction().commit();
+      	 } catch (Exception e) {
+      		 e.printStackTrace();
+      	 }
+      	 return true;
+	}
 }

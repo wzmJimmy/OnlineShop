@@ -7,7 +7,7 @@
 <body>
 	<footer class="footer-distributed">
 	<p class="footer-links">
-		<a href="<c:url value="/index"/>">Home</a> · 
+		<a href="<c:url value="/"/>">Home</a> · 
 		<a href="<c:url value="/aboutus"/>">About Us</a> · 
 		<a href="<c:url value="/getAllProducts" />">Product List</a>
 	</p>

@@ -24,14 +24,10 @@
 			<thead class="thead-dark">
 				<tr>
 					<th>Screen-Shot</th>
-					<th>Product Id</th>
-					<th>Category</th>
 					<th>Product Name</th>
 					<th>Products Price</th>
-					<th>Stock Unit</th>
-					<th>Description</th>
-					<th>Manufacturer</th>
-					<th>View
+					<th>Condition of stock</th>
+					<th>Details
 					<security:authorize access="hasRole('ROLE_USER')" >
 						/Add to Cart
 					</security:authorize> 
@@ -48,13 +44,13 @@
 						<td style="width: 120px">
 						<img src="/products/${prod.id}.jpg"
 							style="width: 100px; height: 90px;"/></td>
-						<td>${prod.id}</td>
-						<td>${prod.productCategory}</td>
 						<td>${prod.productName}</td>
 						<td>${prod.productPrice}</td>
-						<td>${prod.unitStock}</td>
-						<td style="width: 120px">${prod.productDescription}</td>
-						<td>${prod.productManufacturer}</td>
+						<td  class="stock">
+						<c:if test="${prod.unitStock>10}">Sufficient</c:if>
+						<c:if test="${prod.unitStock>0&&prod.unitStock<10}">Only ${prod.unitStock} in Stock</c:if>
+						<c:if test="${prod.unitStock<=0}">Shortage</c:if> 
+						</td>
 						
 						<td ng-controller="myController" style="width: 170px">
 							<a href="getProductById/${prod.id}" class="btn btn-info" role="button"> 
@@ -62,7 +58,7 @@
 
 							<!-- view only for user --> 
 							<security:authorize access="hasRole('ROLE_USER')">
-								<a href="#" ng-click="addToCart(${prod.id})" class="btn btn-primary" 
+								<a  href="#" ng-click="addToCart(${prod.id})" class="btn btn-primary addToChart" 
 								style="margin-left: 5px">
 									<i class="fas fa-cart-arrow-down"></i></a>
 							</security:authorize> 
@@ -85,11 +81,9 @@
 		
 	</div>
 </section>
-
 <jsp:include page="basic/footer.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="<c:url value="/resource/js/productController.js"/>"></script>
 </body>

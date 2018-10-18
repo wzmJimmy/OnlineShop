@@ -6,17 +6,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <body>
-	<div class="sub-panel last">
+	<div idclass="sub-panel last">
 		<div class="row">
 			<div class="col-md-6 form-group">
-				<form:label path="id">Product Id</form:label>
+				<form:label path="id">Product Id(auto-generated)</form:label>
 				<form:input type="text" placeholder="ProductId(auto-generated)"
 					class="form-control" path="id" disabled="true" />
 			</div>
 			<div class="col-md-6 form-group">
-				<form:label path="productName">Product Name</form:label>
+				<form:label path="productName">Product Name</form:label><sup>*</sup>
 				<form:input type="text" placeholder="Enter Product Name"
-					class="form-control" path="productName" />
+					class="form-control product" path="productName" />
 			</div>
 		</div>
 
@@ -26,11 +26,11 @@
 				class="form-control" path="productDescription" />
 		</div>
 		<div class="form-group">
-			<form:label path="productCategory">Product Category</form:label>
-			<form:select class="form-control" path="productCategory">
-				<option value="">Choose an os type.</option>
-				<option value="Android">Android</option>
-				<option value="Mac">IOS</option>
+			<form:label path="productCategory">Product Category</form:label><sup>*</sup>
+			<form:select class="form-control  product" path="productCategory">
+			 	<form:option value="" label="Choose one OS type."/>
+				<form:option value="Android" label="Android"/>
+				<form:option value="IOS" label="IOS"/>
 			</form:select>
 		</div>
 
@@ -41,23 +41,27 @@
 					class="form-control" path="productManufacturer"></form:input>
 			</div>
 			<div class="col-md-4 form-group">
-				<form:label path="productPrice">Product Price</form:label>
+				<form:label path="productPrice">Product Price</form:label><sup>*</sup>
 				<form:input type="text" placeholder="Enter Product Price"
-					class="form-control" path="productPrice"></form:input>
+					class="form-control  product" path="productPrice"></form:input>
 			</div>
 			<div class="col-md-4 form-group">
-				<form:label path="unitStock" >Number of Products</form:label>
-				<form:input type="text" placeholder="Number of Products"
-					class="form-control" path="unitStock"></form:input>
+				<form:label path="unitStock" >Number of Products</form:label><sup>*</sup>
+				<form:input type="text" id="Number_of_Products" placeholder="Number of Products"
+					class="form-control  product" path="unitStock"></form:input>
 			</div>
 		</div>
 		<div class="form-group">
-			<form:label path="productImage" Style="margin-right:20px;">Product Image: </form:label>
-			<form:input type="file" path="productImage" />
+			<form:label path="productImage" Style="margin-right:20px;">Product Image</form:label><sup id="if-star">*</sup>
+			<form:input id="imageFile" type="file" path="productImage" /> 
 		</div>
 		<div class="form-actions">
-			<button type="submit" class="btn btn-lg btn-info">Update</button>
+			<button id="submit" type="submit" class="btn btn-lg btn-info">Update</button>
 		</div>
 	</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="<c:url value="/resource/js/validate.js"/>"></script>
+<script src="<c:url value="/resource/js/product_check.js"/>"></script>
 </body>
 </html>

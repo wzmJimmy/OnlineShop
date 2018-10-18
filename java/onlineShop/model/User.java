@@ -8,10 +8,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+	uniqueConstraints = @UniqueConstraint(columnNames= "emailId")
+)
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 2681531852204068105L;
@@ -19,7 +24,12 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@NotNull(message="emailId cannot be null")
+	@Email(message="email is invalid")
 	private String emailId;
+	
+	@NotNull(message="password cannot be null")
 	private String password;
 	private boolean enabled;
 

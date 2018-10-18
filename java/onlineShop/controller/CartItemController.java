@@ -1,10 +1,12 @@
 package onlineShop.controller;
 
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -36,32 +38,34 @@ public class CartItemController {
     private ProductService productService;
 
     @RequestMapping("/cart/add/{productId}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void addCartItem(@PathVariable(value = "productId") int productId) {
-   	 Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-   	 String username = loggedInUser.getName();
-   	 Customer customer = customerService.getCustomerByUserName(username);
+    public ResponseEntity<String> addCartItem(@PathVariable(value = "productId") int productId) {
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = loggedInUser.getName();
+		Customer customer = customerService.getCustomerByUserName(username);
 
-   	 Cart cart = customer.getCart();
-   	 List<CartItem> cartItems = cart.getCartItem();
-   	 Product product = productService.getProductById(productId);
-   	 
-   	 for (int i = 0; i < cartItems.size(); i++) {
-   		 CartItem cartItem = cartItems.get(i);
-   		 if (product.getId() == (cartItem.getProduct().getId())) {
-   			 cartItem.setQuantity(cartItem.getQuantity() + 1);
-   			 cartItem.setPrice(cartItem.getQuantity() * cartItem.getProduct().getProductPrice());
-   			 cartItemService.addCartItem(cartItem);
-   			 return;
-   		 }
-   	 }
-   	 
-   	 CartItem cartItem = new CartItem();
-   	 cartItem.setQuantity(1);
-   	 cartItem.setProduct(product);
-   	 cartItem.setPrice(product.getProductPrice());
-   	 cartItem.setCart(cart);
-   	 cartItemService.addCartItem(cartItem);
+		Cart cart = customer.getCart();
+		List<CartItem> cartItems = cart.getCartItem();
+		Product product = productService.getProductById(productId);
+
+		for (int i = 0; i < cartItems.size(); i++) {
+			CartItem cartItem = cartItems.get(i);
+			if (product.getId() == (cartItem.getProduct().getId())) {
+				if(product.getUnitStock()==cartItem.getQuantity()) 
+					return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
+				cartItem.setQuantity(cartItem.getQuantity() + 1);
+				cartItem.setPrice(cartItem.getQuantity() * cartItem.getProduct().getProductPrice());
+				cartItemService.addCartItem(cartItem);
+				return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+			}
+		}
+
+		CartItem cartItem = new CartItem();
+		cartItem.setQuantity(1);
+		cartItem.setProduct(product);
+		cartItem.setPrice(product.getProductPrice());
+		cartItem.setCart(cart);
+		cartItemService.addCartItem(cartItem);
+		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping("/cart/removeCartItem/{cartItemId}")
@@ -69,11 +73,20 @@ public class CartItemController {
     public void removeCartItem(@PathVariable(value = "cartItemId") int cartItemId) {
    	 cartItemService.removeCartItem(cartItemId);
     }
-
-    @RequestMapping("/cart/removeAllItems/{cartId}")
+    
+    @RequestMapping("/admin/cart/removeAllItems/{cartId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void removeAllCartItems(@PathVariable(value = "cartId") int cartId) {
    	 Cart cart = cartService.getCartById(cartId);
-   	 cartItemService.removeAllCartItems(cart);
+   	 cartService.removeAllCartItems(cart);
+    }
+
+    @RequestMapping("/cart/removeAllItems")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void removeAllCartItems(Principal principal) {
+    	String uid =  principal.getName();
+    	int cartId = customerService.getCustomerByUserName(uid).getCart().getId();
+   	 	Cart cart = cartService.getCartById(cartId);
+   	 	cartService.removeAllCartItems(cart);
     }
 }

@@ -20,7 +20,11 @@ a:hover{
 .background{
 	background-color:#ffffff;
 }
-input[type="text"], textarea, select{
+input[type="text"], 
+input[type="email"], 
+input[type="tel"], 
+input[type="password"],
+textarea, select{
 	box-shadow: inset 0px 0px 2px #111111;
 }
 .container{
@@ -58,4 +62,17 @@ input[type="text"], textarea, select{
 }
 .buttons>a.btn{
 	margin-right: 20px;
+}
+.small{
+	font-size: small;
+}
+.big{
+	font-size: large;
+}
+sup{
+	color:#F00;
+}
+.error_feedback{
+	font-size: small;
+	color:#F00;
 }

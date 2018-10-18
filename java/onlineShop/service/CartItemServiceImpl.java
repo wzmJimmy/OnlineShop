@@ -22,7 +22,4 @@ public class CartItemServiceImpl implements CartItemService {
    	 cartItemDao.removeCartItem(CartItemId);
     }
 
-    public void removeAllCartItems(Cart cart) {
-   	 cartItemDao.removeAllCartItems(cart);
-    }
 }

@@ -18,19 +18,13 @@ public class CartDaoImpl implements CartDao {
 
 
 	public Cart getCartById(int CartId) {
-		Session session = null;
 	   	 Cart cart = null;
-	   	 try {
-	   		 session = sessionFactory.openSession();
+	   	 try(Session session = sessionFactory.openSession();){
 	   		 session.beginTransaction();
 	   		 cart = (Cart) session.get(Cart.class, CartId);
 	   		 session.getTransaction().commit();
 	   	 } catch (Exception e) {
 	   		 e.printStackTrace();
-	   	 } finally {
-	   		 if(session != null) {
-	   			 session.close();
-	   		 }
 	   	 }
 	   	 return cart;
 	}
@@ -47,11 +41,18 @@ public class CartDaoImpl implements CartDao {
 	public void update(Cart cart) {
 		int cartId = cart.getId();
 		double total = getSalesOrderTotal(cartId);
+		System.out.println(total);
 		cart.setTotalPrice(total);
-		Session session = sessionFactory.openSession();
-		session.saveOrUpdate(cart);
-		session.close();
+		try(Session session = sessionFactory.openSession();){
+			session.beginTransaction();
+			session.saveOrUpdate(cart);
+			session.getTransaction().commit();
+			session.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+	
 	
 	private double getSalesOrderTotal(int cartId) {
 		double total = 0;
@@ -63,5 +64,4 @@ public class CartDaoImpl implements CartDao {
 		}
 		return total;
 	}
-
 }

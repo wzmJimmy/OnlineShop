@@ -16,80 +16,60 @@ public class ProductDaoImpl implements ProductDao {
     private SessionFactory sessionFactory;
 
 	public Product getProductById(int productId) {
-		 Session session = null;
 	   	 Product product = null;
-	   	 try {
-	   		 session = sessionFactory.openSession();
+	   	 try(Session session = sessionFactory.openSession();) {
 	   		 session.beginTransaction();
 	   		 product = (Product) session.get(Product.class, productId);
 	   		 session.getTransaction().commit();
 	   	 } catch (Exception e) {
 	   		 e.printStackTrace();
-	   	 } finally {
-	   		 if (session != null) {
-	   			 session.close();
-	   		 }
 	   	 }
 	   	 return product;
 	}
 
 	public void deleteProduct(int productId) {
-		 Session session = null;
-	   	 try {
-	   		 session = sessionFactory.openSession();
+	   	 try(Session session = sessionFactory.openSession();) {
 	   		 session.beginTransaction();
 	   		 Product product = (Product) session.get(Product.class, productId);
 	   		 session.delete(product);
 	   		 session.getTransaction().commit();
 	   	 } catch (Exception e) {
 	   		 e.printStackTrace();
-	   	 } finally {
-	   		 if (session != null) {
-	   			 session.close();
-	   		 }
 	   	 }
 	}
 
 	public void addProduct(Product product) {
-		Session session = null;
-	   	 try {
-	   		 session = sessionFactory.openSession();
-	   		 session.beginTransaction();
-	   		 session.save(product);
-	   		 session.getTransaction().commit();
-	   	 } catch (Exception e) {
-	   		 e.printStackTrace();
-	   		 //session.getTransaction().rollback();
-	   	 } finally {
-	   		 if (session != null) {
-	   			 session.close();
-	   		 }
-	   	 }
+	   	updateProduct(product);
 	}
 
 	public void updateProduct(Product product) {
-		 Session session = null;
-	   	 try {
-	   		 session = sessionFactory.openSession();
+	   	 try(Session session = sessionFactory.openSession();) {
 	   		 session.beginTransaction();
 	   		 session.saveOrUpdate(product);
 	   		 session.getTransaction().commit();
 	   	 } catch (Exception e) {
 	   		 e.printStackTrace();
 	   		 //session.getTransaction().rollback();
-	   	 } finally {
-	   		 if (session != null) {
-	   			 session.close();
-	   		 }
-	   	 }
+	   	 } 
 	}
 
 	public List<Product> getAllProducts() {
 		 List<Product> products = new ArrayList<>();
 	   	 try(Session session = sessionFactory.openSession();){
 	   		session.beginTransaction();
-	   		 products = session.createCriteria(Product.class).list();
-	   		 session.getTransaction().commit();
+	   		products = session.createQuery("from Product").list();
+	   		session.getTransaction().commit();
+	   	 }catch (Exception e) {
+	   		 e.printStackTrace();
+	   	 }
+	   	 return products;
+	}
+	public List<Product> getProducts(int n) {
+		 List<Product> products = new ArrayList<>();
+	   	 try(Session session = sessionFactory.openSession();){
+	   		session.beginTransaction();
+	   		products = session.createQuery("from Product").setMaxResults(n).list();
+	   		session.getTransaction().commit();
 	   	 }catch (Exception e) {
 	   		 e.printStackTrace();
 	   	 }

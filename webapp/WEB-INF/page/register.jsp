@@ -21,18 +21,22 @@
 			<div class="card-header"><h1>Register</h1></div>
 			<div class="card-body">
 				<c:url value="/customer/registration" var="url"></c:url>
-				<form:form method="post" action="${url}" modelAttribute="customer" enctype="multipart/form-data">
+				<form:form id="register-form" className="validate" method="post" action="${url}" modelAttribute="customer" enctype="multipart/form-data">
+				<%-- <c:url value="/" var="url"></c:url>
+				<form:form id="register-form" className="validate" method="get" action="${url}" modelAttribute="customer" enctype="multipart/form-data"> --%>
 					<div class="sub-panel">
 						<div class="sub-title">User Details</div>
 						<div class="row">
 							<div class="col-md-6 form-group">
 								<form:label path="firstName">First Name</form:label>
+								<sup>*</sup>
 								<form:input type="text" placeholder="Enter First Name"
 									class="form-control" path="firstName"/>
 								<form:errors path="firstName"/>
 							</div>
 							<div class="col-md-6 form-group">
 								<form:label path="lastName">Last Name</form:label>
+								<sup>*</sup>
 								<form:input type="text" placeholder="Enter Last Name"
 									class="form-control" path="lastName"/>
 							</div>
@@ -40,15 +44,30 @@
 						<div class="row">
 							<div class="col-md-6 form-group">
 								<form:label path="user.emailId">Email Id</form:label>
-								<form:input type="text" placeholder="Enter Email ID"
+								<sup>*</sup>
+								<form:input id="email" type="email" placeholder="Enter Email ID"
 									class="form-control" path="user.emailId"/>
 								<form:errors path="user.emailId"/>
 							</div>
 							<div class="col-md-6 form-group">
 								<form:label path="customerPhone">Phone Number</form:label>
-								<form:input type="text" placeholder="Enter Phone Number"
+								<sup>*</sup>
+								<form:input id="phone" type="tel" placeholder="Enter Phone Number"
 									class="form-control" path="customerPhone"/>
 								<form:errors path="customerPhone"/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<form:label path="user.password">Password</form:label>
+								<sup>*</sup>
+								<form:input type="password" placeholder="******"
+									class="form-control" path="user.password" id="password"/>
+							</div>
+							<div class="col-md-6 form-group">
+								<label>Confirm Password</label> 
+								<sup>*</sup>
+								<input type="password" placeholder="******" class="form-control" id="confirm_password" />
 							</div>
 						</div>
 					</div>
@@ -76,7 +95,7 @@
 						<div class="row">
 							<div class="col-md-6 form-group">
 								<form:label path="shippingAddress.country">Country</form:label>
-								<form:input type="text" placeholder="Enter your country"
+								<form:input type="text" placeholder="Enter your country" value="U.S."
 									class="form-control" path="shippingAddress.country"/>
 							</div>
 							<div class="col-md-6 form-group">
@@ -111,7 +130,7 @@
 						<div class="row">
 							<div class="col-md-6 form-group">
 								<form:label path="billingAddress.country">Country</form:label>
-								<form:input type="text" placeholder="Enter your City"
+								<form:input type="text" placeholder="Enter your City" value="U.S."
 									class="form-control" path="billingAddress.country"/>
 							</div>
 							<div class="col-md-6 form-group">
@@ -121,43 +140,19 @@
 								<form:errors path="billingAddress.zipcode"/>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-6 form-group">
-								<form:label path="user.password">Password</form:label>
-								<form:input type="password" placeholder="******"
-									class="form-control" path="user.password" id="pass"/>
-							</div>
-							<div class="col-md-6 form-group">
-								<label>Confirm Password</label> 
-								<input type="password" placeholder="******" class="form-control" id="confirmpass" />
-							</div>
-						</div>
 					</div>
 
 					<div class="form-actions">
-						<button type="submit" class="btn btn-lg btn-info"
-							onclick="return Validate()">Submit</button>
+						<button id="submit" type="submit" class="btn btn-lg btn-info">Submit</button>
 					</div>
-
 				</form:form>
 			</div>
 		</div>
 	</section>
 <%@ include file="basic/footer.jsp"%>
-
-	<!-- Validating Password -->
-	<script type="text/javascript">
-		function Validate() {
-			var password = document.getElementById("pass").value;
-			var confirmpass = document.getElementById("confirmpass").value;
-			if (password != confirmpass) {
-				alert("Password does Not Match!");
-				return false;
-			}
-			return true;
-		}
-	</script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="<c:url value="/resource/js/validate.js"/>"></script>
+<script src="<c:url value="/resource/js/register_check.js"/>"></script>
 </body>
 </html>

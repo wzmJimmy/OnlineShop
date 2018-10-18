@@ -16,26 +16,17 @@ public class CartItemDaoImpl implements CartItemDao {
 	private SessionFactory sessionFactory;
 
 	public void addCartItem(CartItem cartItem) {
-		Session session = null;
-
-		try {
-			session = sessionFactory.openSession();
+		try(Session session = sessionFactory.openSession();) {
 			session.beginTransaction();
 			session.saveOrUpdate(cartItem);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		} 
 	}
 
 	public void removeCartItem(int CartItemId) {
-		Session session = null;
-		try {
-			session = sessionFactory.openSession();
+		try(Session session = sessionFactory.openSession();) {
 			CartItem cartItem = (CartItem) session.get(CartItem.class, CartItemId);
 			Cart cart = cartItem.getCart();
 			List<CartItem> cartItems = cart.getCartItem();
@@ -45,18 +36,36 @@ public class CartItemDaoImpl implements CartItemDao {
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
 	public void removeAllCartItems(Cart cart) {
 		List<CartItem> cartItems = cart.getCartItem();
-		for (CartItem cartItem : cartItems) {
-			removeCartItem(cartItem.getId());
-		}
+		try(Session session = sessionFactory.openSession();) {
+			session.beginTransaction();
+			session.createQuery("Delete CartItem where cart=?").setParameter(0, cart).executeUpdate();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		cartItems.clear();
+	}
+	
+	public void checkStock(CartItem cartItem) {
+		int stock = cartItem.getProduct().getUnitStock();
+		int quantity = cartItem.getQuantity();
+		if(stock<quantity) {
+			cartItem.setInvalidnumber(quantity-stock);
+			cartItem.setQuantity(stock);
+			try(Session session = sessionFactory.openSession();) {
+				session.beginTransaction();
+				session.saveOrUpdate(cartItem);
+				session.getTransaction().commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} 
+		
 	}
 
 }

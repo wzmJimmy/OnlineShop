@@ -15,5 +15,6 @@ public interface ProductDao {
     void updateProduct(Product product);
     
     List<Product> getAllProducts();
+    List<Product> getProducts(int n);
 }
 

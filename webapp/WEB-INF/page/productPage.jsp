@@ -59,17 +59,19 @@
 		<c:url value="/cart/add/${product.id}" var="addcart"></c:url>
 		<div class="buttons" ng-controller="myController">
 			<p class="left">
-				<security:authorize access="hasRole('ROLE_USER')">
-					<a href="#" ng-click="addToCart(${product.id})"
+			<c:if test="${product.unitStock>0}">
+			<security:authorize access="hasRole('ROLE_USER')">
+					<a id="add" href="#" ng-click="addToCart(${product.id})"
 						class="btn btn-info">
 						<i class="fas fa-cart-arrow-down"></i> Add to Cart
 					</a>
 				</security:authorize>
+			</c:if>
 			</p>
 
 			<p class="right">
 				<a href="<c:url value="/getAllProducts" />" class="btn btn-info"> 
-					<i class="far fa-arrow-alt-circle-left"></i> Go Back
+					<i class="far fa-arrow-alt-circle-left"></i> Product List
 				</a>
 			</p>
 		</div>

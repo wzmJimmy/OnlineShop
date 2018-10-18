@@ -14,19 +14,12 @@ public class SalesOrderDaoImpl implements SalesOrderDao {
     private SessionFactory sessionFactory;
 
     public void addSalesOrder(SalesOrder salesOrder) {
-   	 Session session = null;
-   	 
-   	 try {
-   		 session = sessionFactory.openSession();
+   	 try(Session session = sessionFactory.openSession();) {
    		 session.beginTransaction();
    		 session.saveOrUpdate(salesOrder);
    		 session.getTransaction().commit();
    	 } catch (Exception e) {
    		 e.printStackTrace();
-   	 } finally {
-   		 if(session != null) {
-   			 session.close();
-   		 }
    	 }
     }
 }

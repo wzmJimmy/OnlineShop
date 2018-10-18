@@ -10,4 +10,5 @@ public interface CartItemDao {
 
 	void removeAllCartItems(Cart cart);
 
+	void checkStock(CartItem cartItem);
 }

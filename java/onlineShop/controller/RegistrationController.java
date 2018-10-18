@@ -3,11 +3,14 @@ package onlineShop.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import onlineShop.model.Customer;
@@ -38,5 +41,13 @@ public class RegistrationController  {
     	modelAndView.addObject("registrationSuccess", "Registered Successfully. Login using username and password");
     	modelAndView.setViewName("login");
     	return modelAndView;
+	}
+	
+	
+	@RequestMapping(value = "/admin/deletecustomer/{Id}")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void deleteCustomer(@PathVariable(value = "Id") int Id) {
+    	customerService.deletebyId(Id);
+    	System.out.println("deleted!");
 	}
 }

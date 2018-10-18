@@ -1,8 +1,9 @@
 package onlineShop.service;
 
 import onlineShop.model.Customer;
-public interface CustomerService {
-	 void addCustomer(Customer customer);
-	 Customer getCustomerByUserName(String userName);
 
+public interface CustomerService {
+	public void addCustomer(Customer customer);
+	public Customer getCustomerByUserName(String userName);
+	public boolean deletebyId(int i);
 }
